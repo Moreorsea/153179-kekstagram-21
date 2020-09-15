@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Дарья Селянина](https://up.htmlacademy.ru/javascript/21/user/153179).
-* Наставник: `Неизвестно`.
+* Наставник: [Наставника Нет].
 
 ---
 
