@@ -1,3 +1,5 @@
+'use strict';
+
 let data = []
 let commentsRandom = ['Всё отлично!', 'В целом всё неплохо. Но не всё.',
 'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -63,3 +65,79 @@ photoList.forEach(function (photo) {
 
 picturesWrapper.appendChild(fragment)
 
+//появление окна редактирования изображения после загрузки изображения, закрытие окна по Esc
+let fileInput = document.querySelector('#upload-file')
+let imageUpload = document.querySelector('.img-upload__overlay')
+let closeEditImage = document.querySelector('#upload-cancel')
+
+let onPopupEscPress = function(evt) {
+  if(evt.key === 'Escape') {
+    hiddenEditImage()
+  }
+}
+
+fileInput.addEventListener('change', function(e) {
+  showEditImage()
+})
+
+closeEditImage.addEventListener('click', function() {
+  hiddenEditImage()
+})
+
+function showEditImage () {
+  imageUpload.classList.remove('hidden')
+  document.body.classList.add('modal-open')
+
+  document.addEventListener('keydown', onPopupEscPress)
+}
+
+function hiddenEditImage () {
+  imageUpload.classList.add('hidden')
+  document.body.classList.remove('modal-open')
+  fileInput.value = ''
+
+  document.removeEventListener('keydown', onPopupEscPress)
+}
+
+
+//наложение эффекта на изображение
+let effectsPin = document.querySelector('.effect-level__pin')
+let imgUploadForm = document.querySelector('.img-upload__form')
+let photoContainer = document.querySelector('.img-upload__preview')
+let photoPreview = photoContainer.querySelector('img')
+
+let onChangeFilter = function(evt) {
+  let buttonEffect = evt.target.getAttribute('id')
+  if(buttonEffect === 'effect-chrome') {
+    photoPreview.classList.add('effects__preview--chrome')
+  } else if(buttonEffect === 'effect-sepia') {
+    photoPreview.classList.add('effects__preview--sepia')
+  } else if(buttonEffect === 'effect-marvin') {
+    photoPreview.classList.add('effects__preview--marvin')
+  } else if(buttonEffect === 'effect-phobos') {
+    photoPreview.classList.add('effects__preview--phobos')
+  } else if(buttonEffect === 'effect-heat') {
+    photoPreview.classList.add('effects__preview--heat')
+  } else {
+    photoPreview.className = ''
+  }
+}
+
+imgUploadForm.addEventListener('change', function(evt) {
+  if(evt.target && evt.target.matches('input[type="radio"]')) {
+    photoPreview.className = ''
+    onChangeFilter(evt)
+  }
+})
+
+//регулирование интенсивности фильтра
+let effectLevelPin = document.querySelector('.effect-level__pin')
+//effect-level__pin - сюда записать значение
+
+let onChangeFilterLevel = function(evt) {
+
+}
+
+effectLevelPin.addEventListener('mouseup', function(evt) {
+  onChangeFilter()
+})
